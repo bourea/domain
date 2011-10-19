@@ -16,14 +16,12 @@
 #
 
 class DomainName < ActiveRecord::Base
-  validates :name,  :presence => true,
-                    :length   => { :maximum => 255 }
+  validates :name,  :presence   => true,
+                    :length     => { :maximum => 255 },
+                    :uniqueness => { :case_sensitive => false }
   validates :source, :presence => true,
                     :length   => { :maximum => 255 }
   validates :available, :inclusion => { :in => [true, false] }
   validates :registered, :inclusion => { :in => [true, false] }
   validates :registrar, :presence => true
-  validates :created_on, :presence => true
-  validates :updated_on, :presence => true
-  validates :expires_on, :presence => true
 end

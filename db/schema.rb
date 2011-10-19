@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111012133320) do
+ActiveRecord::Schema.define(:version => 20111012172539) do
 
   create_table "domain_names", :force => true do |t|
     t.string   "name"
@@ -24,5 +24,7 @@ ActiveRecord::Schema.define(:version => 20111012133320) do
     t.datetime "updated_at"
     t.boolean  "registered"
   end
+
+  add_index "domain_names", ["name"], :name => "index_domain_names_on_name", :unique => true
 
 end

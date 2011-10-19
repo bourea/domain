@@ -24,6 +24,19 @@ describe DomainName do
     no_name_domain.should_not be_valid
   end
 
+  it "should reject names that are too long" do
+    long_name = "a" * 256
+    long_name_domain = DomainName.new(@attr.merge(:name => long_name))
+    long_name_domain.should_not be_valid
+  end
+
+  it "should reject names identical up to case" do
+    upcased_name = @attr[:name].upcase
+    DomainName.create!(@attr.merge(:name => upcased_name))
+    domainname_with_duplicate_name = DomainName.new(@attr)
+    domainname_with_duplicate_name.should_not be_valid
+  end
+
   it "should require a source" do
     no_source_domain = DomainName.new(@attr.merge(:source => ""))
     no_source_domain.should_not be_valid
@@ -39,18 +52,18 @@ describe DomainName do
     no_registrar_domain.should_not be_valid
   end
 
-  it "should require created_on" do
+  it "should not require created_on" do
     no_created_on_domain =  DomainName.new(@attr.merge(:created_on => ""))
-    no_created_on_domain.should_not be_valid
+    no_created_on_domain.should be_valid
   end
 
-  it "should require updated_on" do
+  it "should not require updated_on" do
     no_updated_on_domain =  DomainName.new(@attr.merge(:updated_on => ""))
-    no_updated_on_domain.should_not be_valid
+    no_updated_on_domain.should be_valid
   end
 
-  it "should require expires_on" do
+  it "should not require expires_on" do
     no_expires_on_domain =  DomainName.new(@attr.merge(:expires_on => ""))
-    no_expires_on_domain.should_not be_valid
+    no_expires_on_domain.should be_valid
   end
 end
